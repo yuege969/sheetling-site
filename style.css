@@ -1,0 +1,94 @@
+/* Sheetling 站点样式：和 store/privacy.html 同一套色板，避免"官网和隐私页像两个产品" */
+:root {
+  --ink: #15151b;
+  --muted: #6a6a76;
+  --line: #e6e6ec;
+  --blue: #3866ff;
+  --blue-dark: #2a4fe0;
+  --bg: #fbfbfd;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0 auto; max-width: 780px; padding: 40px 24px 96px;
+  font: 16px/1.7 -apple-system, "PingFang SC", "Hiragino Sans GB", system-ui, sans-serif;
+  color: var(--ink); background: #fff;
+}
+a { color: var(--blue); }
+code { font-family: ui-monospace, Menlo, monospace; font-size: 13.5px; background: #f5f5f8; padding: 1px 5px; border-radius: 5px; }
+
+header.nav {
+  display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+  padding-bottom: 18px; border-bottom: 1px solid var(--line); margin-bottom: 44px;
+}
+header.nav .mark { display: flex; align-items: center; gap: 9px; font-weight: 700; letter-spacing: -0.01em; }
+header.nav .mark img { width: 26px; height: 26px; }
+header.nav nav { margin-left: auto; display: flex; gap: 18px; font-size: 14.5px; }
+header.nav nav a { color: var(--muted); text-decoration: none; }
+header.nav nav a:hover { color: var(--blue); }
+
+h1 { font-size: 40px; line-height: 1.15; letter-spacing: -0.025em; margin: 0 0 16px; }
+h2 { font-size: 21px; letter-spacing: -0.01em; margin: 52px 0 12px; }
+h3 { font-size: 16px; margin: 0 0 6px; }
+p.lede { font-size: 19px; color: var(--muted); margin: 0 0 28px; }
+p.sub { color: var(--muted); font-size: 14px; margin: 0 0 8px; }
+
+.buy {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: var(--blue); color: #fff; text-decoration: none;
+  font-weight: 600; font-size: 16px; padding: 13px 26px; border-radius: 10px;
+  box-shadow: 0 8px 20px rgba(56, 102, 255, .25);
+}
+.buy:hover { background: var(--blue-dark); }
+.buy-note { font-size: 13.5px; color: var(--muted); margin: 12px 0 0; }
+.price { font-weight: 700; }
+
+/* 注意：这段里是「一段话 + 一个 <b>」的混排，不能给容器设 display:flex——
+   flex 会把每个文字节点变成独立的 flex item，整句话会被拆成竖着的几列。 */
+.freebox {
+  background: var(--bg); border: 1px solid var(--line); border-radius: 12px;
+  padding: 16px 18px; margin: 26px 0 0; font-size: 15px;
+}
+.freebox b { color: var(--ink); }
+
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 14px; margin: 26px 0 0; }
+.card { border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; }
+.card h3 { display: flex; align-items: center; gap: 8px; }
+.card p { margin: 6px 0 0; font-size: 14.5px; color: var(--muted); }
+.card .n { font-family: ui-monospace, Menlo, monospace; font-size: 22px; font-weight: 700; color: var(--blue); }
+
+.shot { width: 100%; border: 1px solid var(--line); border-radius: 12px; margin: 18px 0 0; display: block; }
+.shot-cap { font-size: 13px; color: var(--muted); margin: 8px 0 0; }
+
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 15px; }
+th, td { text-align: left; padding: 9px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { color: var(--muted); font-weight: 600; font-size: 13.5px; }
+
+ul { padding-left: 22px; }
+li { margin: 7px 0; }
+
+details { border-bottom: 1px solid var(--line); padding: 12px 0; }
+details summary { cursor: pointer; font-weight: 600; }
+details p { margin: 8px 0 0; color: var(--muted); font-size: 15px; }
+
+footer {
+  margin-top: 64px; padding-top: 20px; border-top: 1px solid var(--line);
+  color: var(--muted); font-size: 13.5px;
+}
+footer a { color: var(--muted); }
+footer .row { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 6px; }
+
+/* 法务页（terms / refund）用更窄的行宽 */
+.legal h1 { font-size: 30px; }
+.legal h2 { font-size: 18px; margin: 34px 0 8px; }
+.legal p, .legal li { font-size: 15.5px; }
+
+/* 手机上标题别撑满屏：40px 的 h1 在 390px 宽里会吃掉三行 */
+@media (max-width: 560px) {
+  body { padding: 28px 18px 72px; }
+  h1 { font-size: 29px; }
+  p.lede { font-size: 17px; }
+  header.nav { margin-bottom: 30px; }
+  header.nav nav { gap: 13px; font-size: 14px; }
+  h2 { margin-top: 40px; }
+}

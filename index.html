@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sheetling — turn PDF tables into Excel, locally</title>
+<meta name="description" content="A Chrome extension that turns tables inside PDFs into real .xlsx files. No upload, no permissions, no account. $14.99 once, three conversions free.">
+<style>/* 构建时被 tools/publish-site.mjs 内联 */</style>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="nav">
+  <div class="mark"><img src="icon-128.png" alt=""> Sheetling</div>
+  <nav>
+    <a href="#pricing">Pricing</a>
+    <a href="terms.html">Terms</a>
+    <a href="refund.html">Refunds</a>
+    <a href="privacy.html">Privacy</a>
+  </nav>
+</header>
+
+<h1>Turn PDF tables into Excel — without sending the PDF anywhere.</h1>
+<p class="lede">A Chrome extension for invoices, bank statements, reports and statistical yearbooks.
+It reads the PDF's own text layer and vector rules inside your browser and builds a real .xlsx.
+Your file never leaves your computer.</p>
+
+<p>
+  <a class="buy" id="buy" href="#pricing">Get Sheetling — <span class="price">$14.99</span> once</a>
+</p>
+<p class="buy-note">Three complete conversions free before you pay. No subscription, no account.</p>
+
+<div class="freebox">
+  <b>Why the numbers are believable:</b> the extension declares <code>"permissions": []</code> and
+  <code>"host_permissions": []</code>, and its page CSP sets <code>connect-src 'self'</code> — so
+  Chrome itself blocks any request to an outside domain. You can confirm it in DevTools → Network:
+  zero requests during a conversion.
+</div>
+
+<img class="shot" src="shot-ui.png" alt="Sheetling: a bank statement PDF with the detected table boxed, and the export button">
+<p class="shot-cap">The actual extension window: detected tables come up as boxes you can drag, resize or drop before exporting. Real PDF, no mockup.</p>
+
+<h2>What you get</h2>
+<div class="cards">
+  <div class="card"><h3>Numbers that calculate</h3><p>Amounts, dates and percentages are written as real numbers and dates — ready to SUM, sort and pivot. Long IDs (invoice numbers) stay as text so leading zeros survive.</p></div>
+  <div class="card"><h3>Merged cells from vector lines</h3><p>Tables drawn with borders are rebuilt from their lines, so merged headers come out as merged cells in Excel, not blank ones.</p></div>
+  <div class="card"><h3>One sheet per table</h3><p>Multiple tables in one PDF become multiple sheets, named by page (<code>p1</code>, <code>p2-1</code>, <code>p2-2</code>).</p></div>
+  <div class="card"><h3>Fixable, not final</h3><p>Detected tables appear as boxes: drag to move, corner to resize, click to exclude. When the automatic guess is wrong you fix it in seconds instead of re-exporting.</p></div>
+  <div class="card"><h3>Locale-aware</h3><p><code>1.234,56</code> and <code>1,234.56</code> are read as the same amount; <code>28.10.2024</code> becomes a real date. Ambiguous formats are left as text rather than guessed.</p></div>
+  <div class="card"><h3>English and Chinese UI</h3><p>Follows your browser language; switchable in the top bar. Chinese invoices export with Chinese sheet names.</p></div>
+</div>
+
+<h2 id="pricing">Pricing</h2>
+<table>
+  <tr><th>What</th><th>Price</th><th>Notes</th></tr>
+  <tr><td>Free trial</td><td>Free</td><td>Three complete conversions — whole files, exported in full. Not three pages, no watermark.</td></tr>
+  <tr><td>Sheetling license</td><td class="price">$14.99 once</td><td>Unlimited conversions forever. One-time payment, no subscription, no account, no device limit.</td></tr>
+</table>
+<p>After checkout you receive a license key by email. Open the extension, paste it into the key field in the
+left sidebar, press <b>Activate</b>. The key is verified on your machine — the extension never sends it
+anywhere to check, and it keeps working offline.</p>
+<p>
+  <a class="buy" id="buy2" href="#pricing">Buy Sheetling — $14.99</a>
+</p>
+<p class="buy-note">Payments are processed by <a href="https://www.creem.io" rel="noopener">Creem</a>, which acts as
+merchant of record and handles sales tax and receipts. Card and other supported methods are handled on
+Creem's checkout page — this site never sees your payment details.</p>
+
+<h2>Limits, stated plainly</h2>
+<ul>
+  <li><b>Text-layer PDFs only.</b> Scanned or photographed PDFs need OCR and are not supported. We would
+      rather say so than sell you a guess.</li>
+  <li><b>Up to 50 pages / 20 MB per file.</b> Larger or password-protected files are rejected with a clear message.</li>
+  <li><b>Not a layout clone.</b> Multi-row wrapped cells are merged into one row, and grouped sub-lists are
+      flattened. The output is meant to be calculated with, not pixel-matched to the PDF.</li>
+</ul>
+
+<h2>Questions</h2>
+
+<details><summary>Does the free trial require an account or a card?</summary>
+<p>No account, no card, no email. Install the extension and convert three files. The key field only appears when
+you want more.</p></details>
+
+<details><summary>How do I know my PDF isn't uploaded?</summary>
+<p>The manifest requests no permissions and no host permissions, and the extension's own
+Content-Security-Policy only allows <code>connect-src 'self'</code> — so an outside request is blocked by Chrome,
+not by our good intentions. Open DevTools → Network, convert a file, and watch it stay empty. The
+<a href="privacy.html">privacy page</a> has the exact steps.</p></details>
+
+<details><summary>Which files does it work well on?</summary>
+<p>Invoices (including Chinese e-invoices and English bills), bank statements, expense reports, government
+statistical yearbooks, and tables inside papers with ruled lines. Results are best when the table has visible
+column alignment or borders.</p></details>
+
+<details><summary>What if it gets the box wrong?</summary>
+<p>Drag it, resize it with the bottom-right corner, or draw a new box anywhere on the page. Only the boxes you
+keep are exported.</p></details>
+
+<details><summary>Can I get a refund?</summary>
+<p>Yes — 14 days, no interrogation. See <a href="refund.html">refunds</a>.</p></details>
+
+<details><summary>Lost my key / changed computers?</summary>
+<p>Reply to your receipt or email the support address below with your order number and we re-send it. The license
+is not tied to a device count.</p></details>
+
+<footer>
+  <div>Sheetling is a Chrome extension by an independent developer. Sold through Creem as merchant of record.</div>
+  <div class="row">
+    <a href="mailto:yuege_969@163.com">yuege_969@163.com</a>
+    <a href="terms.html">Terms of Service</a>
+    <a href="refund.html">Refund Policy</a>
+    <a href="privacy.html">Privacy Policy</a>
+  </div>
+</footer>
+
+<script id="checkout-config">window.SHEETLING_CHECKOUT = "https://creem.io/REPLACE_WITH_PRODUCT_LINK";</script>
+<script>
+  // 结账链接由构建脚本注入（单一真源：extension-src/config.js 的 BUY_URL）。
+  // 站点上不写第二份：改价格/换链接只改一处，扩展和官网不会各说一套。
+  document.querySelectorAll('#buy, #buy2').forEach((a) => {
+    const url = window.SHEETLING_CHECKOUT || '';
+    if (url) a.setAttribute('href', url); else a.textContent = 'Checkout link not configured yet';
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>隐私政策 · Sheetling</title>
+<style>
+  :root { --ink:#15151b; --muted:#6a6a76; --line:#e6e6ec; --blue:#3866ff; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0 auto; max-width: 720px; padding: 56px 24px 96px;
+    font: 16px/1.75 -apple-system, "PingFang SC", "Hiragino Sans GB", system-ui, sans-serif;
+    color: var(--ink);
+  }
+  h1 { font-size: 28px; margin: 0 0 6px; letter-spacing: -0.01em; }
+  h2 { font-size: 18px; margin: 40px 0 10px; }
+  .sub { color: var(--muted); font-size: 14px; margin: 0 0 8px; }
+  .lede { font-size: 17px; padding: 16px 18px; border-left: 3px solid var(--blue); background: #f6f8ff; border-radius: 0 8px 8px 0; }
+  table { border-collapse: collapse; width: 100%; margin: 14px 0; font-size: 15px; }
+  th, td { text-align: left; padding: 9px 12px; border-bottom: 1px solid var(--line); }
+  th { color: var(--muted); font-weight: 600; font-size: 13.5px; }
+  code, pre { font-family: ui-monospace, Menlo, monospace; font-size: 13.5px; }
+  pre { background: #f5f5f8; padding: 14px 16px; border-radius: 10px; overflow-x: auto; line-height: 1.6; }
+  ul { padding-left: 22px; }
+  li { margin: 6px 0; }
+  footer { margin-top: 56px; padding-top: 18px; border-top: 1px solid var(--line); color: var(--muted); font-size: 13.5px; }
+  a { color: var(--blue); }
+</style>
+</head>
+<body>
+
+<h1>隐私政策</h1>
+<p class="sub">Sheetling（PDF 转 Excel · 本地处理）· Chrome 扩展 · 最后更新：2026-11-24</p>
+
+<p class="lede"><b>我们不收集任何数据。</b>你的 PDF 不会离开你的电脑，扩展也没有能力把它发出去——
+没有申请任何网络权限，页面的 CSP 又只允许它读自己包内的文件。</p>
+
+<h2>1. 收集什么</h2>
+<p>什么都不收集。具体到每一类：</p>
+<table>
+  <tr><th>数据类型</th><th>是否收集</th></tr>
+  <tr><td>你选择的 PDF 文件</td><td>不收集，不上传，不转存</td></tr>
+  <tr><td>转换生成的文件</td><td>只保存在你自己的下载目录</td></tr>
+  <tr><td>浏览记录 / 你访问的网页</td><td>不收集（扩展没有站点访问权限）</td></tr>
+  <tr><td>使用统计 / 崩溃日志 / 设备信息</td><td>不收集</td></tr>
+  <tr><td>账号、邮箱、付款信息</td><td>扩展本身不收集；如通过商店完成购买，由商店处理</td></tr>
+</table>
+
+<h2>2. 技术上为什么做不到</h2>
+<p>不是"我们承诺不发"，是<b>结构上没有这个能力</b>：</p>
+<pre>// manifest.json
+{
+  "permissions": [],
+  "host_permissions": [],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'; connect-src 'self'"
+  }
+}</pre>
+<ul>
+  <li>没有 <code>host_permissions</code>，扩展读不到任何网站的数据；没有内容脚本，也改不了你访问的页面。</li>
+  <li><code>connect-src 'self'</code> 是浏览器层的网络白名单：扩展页面只允许 <code>fetch</code> 自己包内的文件（解析 PDF 用的 cMap 和字体），
+      向任何外部域名发请求都会被 CSP 当场拦掉——这一步不经过我们的代码，代码写错也发不出去。</li>
+  <li>没有申请 <code>downloads</code>：保存文件用的是页面内的 <code>&lt;a download&gt;</code> + Blob URL。</li>
+  <li>没有内容脚本，所以读不到你访问的任何网页。</li>
+  <li>PDF 解析库（pdf.js）、字体和中文 cMap 全部打包在扩展本地，不从 CDN 取一个字节。</li>
+</ul>
+
+<h2>3. 你可以自己验证</h2>
+<p>三步，五分钟：</p>
+<ol>
+  <li>打开扩展，按 <code>F12</code> 或右键 →「检查」，切到 <b>Network</b> 面板。</li>
+  <li>保持面板打开，拖一个 PDF 进去转换。</li>
+  <li>Network 面板应该<b>一条请求都没有</b>。下载的那一下是浏览器本地行为，不产生请求。</li>
+</ol>
+<p>我们自己也测过：三个真实 PDF（英文对账单 3 页、中文电子发票、中文餐饮小票），转换过程分别用时
+95ms / 89ms / 79ms，网络请求数都是 <b>0</b>。</p>
+
+<h2>4. 第三方</h2>
+<p>扩展不包含任何分析、广告、崩溃上报或 A/B 测试 SDK。</p>
+<p>如果扩展通过 Chrome 应用商店分发，商店本身会按其隐私政策处理安装与付款信息，那部分不在本扩展控制范围内。</p>
+
+<h2>5. 儿童隐私</h2>
+<p>本扩展不面向 13 岁以下儿童，也不收集任何人的个人信息。</p>
+
+<h2>6. 变更</h2>
+<p>如果将来引入了需要收集数据的功能（例如可选的云端 OCR），本页会先更新，并在扩展更新说明里写明。
+在此之前，上面「不收集」的结论一直有效。</p>
+
+<h2>7. 联系方式</h2>
+<p>问题、报告或功能请求：<a href="mailto:yuege_969@163.com">yuege_969@163.com</a></p>
+
+
+<h2 id="en">English summary</h2>
+<p class="sub">Sheetling – PDF to Excel (local conversion) · Chrome extension · Last updated: 2026-11-24</p>
+<p class="lede"><b>We collect no data.</b> Your PDF never leaves your computer, and the extension
+has no technical ability to send it anywhere — it requests no network permissions, and its
+Content-Security-Policy only allows it to read files inside its own package.</p>
+<ul>
+  <li><b>What is collected:</b> nothing. No files, no page contents, no usage statistics, no crash logs, no device information, no account.</li>
+  <li><b>Why it is impossible:</b> <code>manifest.json</code> declares <code>"permissions": []</code> and <code>"host_permissions": []</code>, so the extension cannot read the pages you visit, and the page CSP sets <code>connect-src 'self'</code>, so the browser blocks any request to an outside domain — that check happens in Chrome, not in our code. The PDF engine (pdf.js), fonts and CJK cmaps are bundled locally — nothing is fetched from a CDN.</li>
+  <li><b>Where files go:</b> the .xlsx is generated in your browser and saved through a Blob URL to your own download folder. Nothing is uploaded.</li>
+  <li><b>Verify it yourself:</b> open DevTools → Network, convert a PDF, and observe zero requests.</li>
+  <li><b>Third parties:</b> no analytics, ads, crash reporting or A/B testing SDKs. If you installed the extension from the Chrome Web Store, the store handles installation and payment data under its own policy.</li>
+  <li><b>Children:</b> not directed to children under 13; no personal data is collected from anyone.</li>
+  <li><b>Contact:</b> <a href="mailto:yuege_969@163.com">yuege_969@163.com</a></li>
+</ul>
+<footer>
+  <p>唯一真源：<a href="https://github.com/yuege969/sheetling/blob/main/store/privacy.html">sheetling / store/privacy.html</a>　·　本页由脚本生成，请勿直接编辑。</p>
+  Sheetling · 本页可离线保存，也可自行部署到任意静态托管。
+</footer>
+
+</body>
+</html>
