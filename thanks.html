@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Thank you — Sheetling</title>
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="style.css">
+<style>
+  .ok { display: flex; align-items: center; gap: 12px; margin: 8px 0 22px; }
+  .ok .tick {
+    width: 40px; height: 40px; flex: 0 0 auto; border-radius: 50%;
+    background: #e8f7ee; color: #1a6b3c; display: grid; place-items: center;
+    font-size: 22px; font-weight: 700;
+  }
+  .ok h1 { font-size: 30px; margin: 0; }
+  .steps { counter-reset: s; list-style: none; padding: 0; margin: 18px 0 0; }
+  .steps li { counter-increment: s; position: relative; padding-left: 38px; margin: 16px 0; }
+  .steps li::before {
+    content: counter(s); position: absolute; left: 0; top: 1px;
+    width: 24px; height: 24px; border-radius: 50%; background: #eef2ff; color: var(--blue);
+    display: grid; place-items: center; font-weight: 700; font-size: 13px;
+  }
+  .box { border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; margin: 22px 0; background: var(--bg); }
+  .order { font-family: ui-monospace, Menlo, monospace; font-size: 14px; }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="mark"><img src="icon-128.png" alt=""> Sheetling</div>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="refund.html">Refunds</a>
+    <a href="privacy.html">Privacy</a>
+  </nav>
+</header>
+
+<div class="ok"><div class="tick">✓</div><h1>Payment received</h1></div>
+
+<p class="lede">Thank you. Your license key is being issued now and will arrive by email — usually within
+minutes, always within 24 hours.</p>
+
+<div class="box">
+  <p style="margin:0 0 6px"><b>Where to look:</b> the email address you used at checkout. The receipt comes from
+  Creem; the license key comes from us (subject line starts with <b>[Sheetling]</b>) — check your spam folder,
+  they arrive separately.</p>
+  <p style="margin:0" id="orderline" hidden><b>Your order:</b> <span class="order" id="orderid"></span></p>
+</div>
+
+<h2>How to activate</h2>
+<ol class="steps">
+  <li>Click the Sheetling icon in Chrome — the extension opens as a full tab.</li>
+  <li>In the left sidebar, paste the key into the field and press <b>Activate</b>.
+      The key starts with <code>SL1.</code> — copy the whole string.</li>
+  <li>That's it. It works offline from then on, on this browser profile, with no account and no further checks.</li>
+</ol>
+
+<h2>If the email doesn't arrive</h2>
+<p>Email <a href="mailto:yuege969dev@gmail.com">yuege969dev@gmail.com</a> with your order number (above) or the
+email address you paid with. We re-send the same key — no interrogation, usually the same day.</p>
+
+<p>Changed computers, or cleared your browser data? The key still works — paste it again on the new machine.</p>
+
+<h2>Not what you expected?</h2>
+<p>Refunds within 14 days, no questions asked: see <a href="refund.html">the refund policy</a>.</p>
+
+<footer>
+  <div class="row">
+    <a href="mailto:yuege969dev@gmail.com">yuege969dev@gmail.com</a>
+    <a href="index.html">Home</a>
+    <a href="terms.html">Terms of Service</a>
+    <a href="refund.html">Refund Policy</a>
+    <a href="privacy.html">Privacy Policy</a>
+  </div>
+</footer>
+
+<script>
+  // Creem 付款成功后会带 query 参数跳回来：?checkout_id=ch_…&order_id=ord_…
+  // 把订单号显示出来，用户报障时直接复制，不用去翻收据。
+  (() => {
+    const p = new URLSearchParams(location.search);
+    const order = p.get('order_id') || p.get('checkout_id') || '';
+    if (!/^[A-Za-z0-9_-]{4,64}$/.test(order)) return;
+    document.getElementById('orderid').textContent = order;
+    document.getElementById('orderline').hidden = false;
+  })();
+</script>
+</body>
+</html>
