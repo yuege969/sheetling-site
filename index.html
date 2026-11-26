@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Sheetling — turn PDF tables into Excel, locally</title>
-<meta name="description" content="A Chrome extension that turns tables inside PDFs into real .xlsx files. No upload, no permissions, no account. $14.99 once, three conversions free.">
+<meta name="description" content="A Chrome and Edge extension that turns tables inside PDFs into real .xlsx files. No upload, no permissions, no account. $14.99 once, three conversions free.">
 <style>/* 构建时被 tools/publish-site.mjs 内联 */</style>
 <link rel="stylesheet" href="style.css">
 </head>
@@ -21,7 +21,7 @@
 </header>
 
 <h1>Turn PDF tables into Excel — without sending the PDF anywhere.</h1>
-<p class="lede">A Chrome extension for invoices, bank statements, reports and statistical yearbooks.
+<p class="lede">A Chrome and Edge extension for invoices, bank statements, reports and statistical yearbooks.
 It reads the PDF's own text layer and vector rules inside your browser and builds a real .xlsx.
 Your file never leaves your computer.</p>
 
@@ -33,7 +33,7 @@ Your file never leaves your computer.</p>
 <div class="freebox">
   <b>Why the numbers are believable:</b> the extension declares <code>"permissions": []</code> and
   <code>"host_permissions": []</code>, and its page CSP sets <code>connect-src 'self'</code> — so
-  Chrome itself blocks any request to an outside domain. You can confirm it in DevTools → Network:
+  The browser itself blocks any request to an outside domain. You can confirm it in DevTools → Network:
   zero requests during a conversion.
 </div>
 
@@ -83,7 +83,7 @@ you want more.</p></details>
 
 <details><summary>How do I know my PDF isn't uploaded?</summary>
 <p>The manifest requests no permissions and no host permissions, and the extension's own
-Content-Security-Policy only allows <code>connect-src 'self'</code> — so an outside request is blocked by Chrome,
+Content-Security-Policy only allows <code>connect-src 'self'</code> — so an outside request is blocked by the browser,
 not by our good intentions. Open DevTools → Network, convert a file, and watch it stay empty. The
 <a href="privacy.html">privacy page</a> has the exact steps.</p></details>
 
@@ -104,7 +104,7 @@ keep are exported.</p></details>
 is not tied to a device count.</p></details>
 
 <footer>
-  <div>Sheetling is a Chrome extension by an independent developer. Sold through Creem as merchant of record.</div>
+  <div>Sheetling is a Chrome and Edge extension by an independent developer. Sold through Creem as merchant of record.</div>
   <div class="row">
     <a href="mailto:yuege969dev@gmail.com">yuege969dev@gmail.com</a>
     <a href="terms.html">Terms of Service</a>
